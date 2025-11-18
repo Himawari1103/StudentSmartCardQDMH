@@ -1,0 +1,16 @@
+services:
+  db:
+    container_name: smart_card_db
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: "1"
+      MYSQL_DATABASE: "hospital"
+    ports:
+      - "3306:3306"
+    volumes:
+      - smart_card_data:/var/lib/mysql
+
+volumes:
+  smart_card_data:
+    external: true
+    name: smart_card_data

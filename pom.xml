@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.qdmh</groupId>
+    <artifactId>StudentSmartCardQDMH</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--<maven.compiler.release>17</maven.compiler.release>-->
+        <!--<exec.mainClass>com.qdmh.studentsmartcardqdmh.PatientSmartCardQDMH</exec.mainClass>-->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+    
+    <!-- ant-javacard -->
+    <repositories>
+        <repository>
+            <id>javacard-pro</id>
+            <url>https://mvn.javacard.pro/maven/</url>
+        </repository>
+    </repositories>
+    
+    <pluginRepositories>
+        <pluginRepository>
+            <id>javacard-pro</id>
+            <url>https://mvn.javacard.pro/maven/</url>
+        </pluginRepository>
+    </pluginRepositories>
+    
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+
+        <!-- JavaCard Framework -->
+        <!-- https://mvnrepository.com/artifact/javacard/framework -->
+        <dependency>
+            <groupId>javacard</groupId>
+            <artifactId>framework</artifactId>
+            <version>3.0.4</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JCardSim -->
+        <!-- https://mvnrepository.com/artifact/com.klinec/jcardsim -->
+        <dependency>
+            <groupId>com.klinec</groupId>
+            <artifactId>jcardsim</artifactId>
+            <version>3.0.6.0</version>
+        </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api -->
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>javax.persistence-api</artifactId>
+            <version>2.2</version>
+        </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.6.15.Final</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.netbeans.external</groupId>
+            <artifactId>AbsoluteLayout</artifactId>
+            <version>RELEASE270</version>
+        </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/com.toedter/jcalendar -->
+        <dependency>
+            <groupId>com.toedter</groupId>
+            <artifactId>jcalendar</artifactId>
+            <version>1.4</version>
+        </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/com.formdev/flatlaf -->
+        <dependency>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf</artifactId>
+            <version>3.6.2</version>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.1.0</version>
+                <dependencies>
+                    <!-- https://mvnrepository.com/artifact/com.github.martinpaljak/ant-javacard -->
+                    <dependency>
+                        <groupId>com.github.martinpaljak</groupId>
+                        <artifactId>ant-javacard</artifactId>
+                        <version>24.11.19</version>
+                    </dependency>
+                </dependencies>
+
+                <executions>
+                    <execution>
+                        <id>convert-cap</id>
+                        <phase>package</phase>
+                        <configuration>
+                            <target>
+                                <taskdef name="javacard"
+                                         classname="pro.javacard.ant.JavaCard"
+                                         classpathref="maven.plugin.classpath"/>
+                                <javacard jckit="/home/nhnquang/java_card/tools/java_card_devkit_tools-bin-v25.0-b_470-23-APR-2025"> 
+                                    <cap
+                                        package="com.qdmh.studentsmartcardqdmh.applet.helloworldapplet"
+                                        output="target/HelloWorldApplet.cap"
+                                        aid="A000000001"
+                                        version="1.0"                  
+                                        sources="src/main/java/com/qdmh/studentsmartcardqdmh/applet/helloworldapplet"
+                                    >
+                                        <applet class="com.qdmh.studentsmartcardqdmh.applet.helloworldapplet.HelloWorldApplet" aid="A0000000010101"/>
+                                    </cap>
+                                    <cap
+                                        package="com.qdmh.studentsmartcardqdmh.applet.studentapplet"
+                                        output="target/PatientApplet.cap"
+                                        aid="1122334455"
+                                        version="1.0"                  
+                                        sources="src/main/java/com/qdmh/studentsmartcardqdmh/applet/patientapplet"
+                                    >
+                                        <applet class="com.qdmh.studentsmartcardqdmh.applet.studentapplet.StudentApplet" aid="11223344550000"/>
+                                    </cap>
+                                </javacard>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>   
+</project>
