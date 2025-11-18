@@ -127,7 +127,7 @@
                                         output="target/PatientApplet.cap"
                                         aid="1122334455"
                                         version="1.0"                  
-                                        sources="src/main/java/com/qdmh/studentsmartcardqdmh/applet/patientapplet"
+                                        sources="src/main/java/com/qdmh/studentsmartcardqdmh/applet/studentapplet"
                                     >
                                         <applet class="com.qdmh.studentsmartcardqdmh.applet.studentapplet.StudentApplet" aid="11223344550000"/>
                                     </cap>
